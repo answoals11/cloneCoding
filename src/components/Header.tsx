@@ -17,6 +17,7 @@ export default Header
 const Container = styled.div<{ isScroll: boolean }>`
   position: fixed;
   display: flex;
+  align-items: center;
 
   width: 100%;
   height: 64px;
