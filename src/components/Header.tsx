@@ -7,7 +7,7 @@ interface Props {
 const Header: React.FC<Props> = ({ isScroll }) => {
   return (
     <Container isScroll={isScroll}>
-      <div>Laftel</div>ss
+      <div>Laftel</div>
     </Container>
   )
 }
