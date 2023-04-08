@@ -25,6 +25,7 @@ const Container = styled.div<{ isScroll: boolean }>`
   padding: 0 3.125rem;
 
   transition: 0.3s;
+  z-index: 10;
   color: white;
   background-color: ${({ isScroll }) => (isScroll ? "black" : "none")};
 `

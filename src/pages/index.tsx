@@ -5,14 +5,12 @@ import { getMainList } from "../apis/home"
 import Header from "../components/Header"
 import Carousel from "../components/Carousel"
 import { CarouselType } from "../interfaces/carousel"
+import { URL } from "url"
 
 const Home = () => {
   const [scroll, setScroll] = useState<number>(0)
 
   const { data } = useQuery<CarouselType[]>("main", getMainList, {
-    onSuccess: (data) => {
-      console.log("success", data)
-    },
     onError: (e) => {
       console.log("error: ", e)
     },
@@ -32,12 +30,14 @@ const Home = () => {
   return (
     <Container>
       <Header isScroll={scroll > 64} />
-      <Carousel>
-        {data &&
-          data.map(({ web_img }) => {
-            return <img src={web_img} />
-          })}
-      </Carousel>
+      <CarouselContainer>
+        <Carousel>
+          {data &&
+            data.map(({ web_img }) => {
+              return <CarouselCard img={web_img} />
+            })}
+        </Carousel>
+      </CarouselContainer>
     </Container>
   )
 }
@@ -46,9 +46,14 @@ export default Home
 
 const Container = styled.div`
   display: flex;
-  height: 1200px;
 `
-const CarouselImage = styled.img`
+const CarouselContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 642px;
+`
+const CarouselCard = styled.div<{ img: string }>`
+  width: 100%;
+  height: 642px;
+  background-size: cover;
+  background-image: url(${(props) => props.img});
 `
