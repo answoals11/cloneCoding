@@ -17,6 +17,9 @@ const Carousel: React.FC<Props> = ({ children }) => {
     fade: true,
     speed: 500,
     slidesToShow: 1,
+    pauseOnFocus: false,
+    pauseOnHover: false,
+    pauseOnDotsHover: false,
     autoplay: true,
     autoplaySpeed: 5000,
     prevArrow: (
