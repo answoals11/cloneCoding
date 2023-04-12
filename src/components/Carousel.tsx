@@ -6,12 +6,12 @@ import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
 interface Props {
+  settings?: Settings
   children: React.ReactNode
 }
 
-const Carousel: React.FC<Props> = ({ children }) => {
-  // useMemo를 써야할까?
-  const settings: Settings = {
+const Carousel: React.FC<Props> = ({ settings, children }) => {
+  const defaultSettings: Settings = {
     dots: true,
     infinite: true,
     fade: true,
@@ -32,11 +32,11 @@ const Carousel: React.FC<Props> = ({ children }) => {
         <NextIcon />
       </NextTo>
     ),
+    ...settings,
   }
-
   return (
     <React.Fragment>
-      <StyledSlider {...settings}>{children}</StyledSlider>
+      <StyledSlider {...defaultSettings}>{children}</StyledSlider>
     </React.Fragment>
   )
 }

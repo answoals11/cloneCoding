@@ -1,16 +1,28 @@
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import styled from "styled-components"
-import { getMainList } from "../apis/home"
+import { getDailyList, getMainList } from "../apis/home"
 import Header from "../components/Header"
 import Carousel from "../components/Carousel"
 import { CarouselType } from "../interfaces/carousel"
 import { FiChevronRight } from "react-icons/fi"
+import Section from "../components/Section"
+import WeekPicker from "../components/WeekPicker"
 
 const Home = () => {
   const [scroll, setScroll] = useState<number>(0)
+  const [day, setDay] = useState<string>("월요일")
 
-  const { data } = useQuery<CarouselType[]>("main", getMainList, {
+  const { data: carouselData } = useQuery<CarouselType[]>(
+    "carousel",
+    getMainList,
+    {
+      onError: (e) => {
+        console.log("error: ", e)
+      },
+    }
+  )
+  const { data: dailyData } = useQuery("daily", getDailyList, {
     onError: (e) => {
       console.log("error: ", e)
     },
@@ -32,8 +44,8 @@ const Home = () => {
       <Header isScroll={scroll > 64} />
       <CarouselContainer>
         <Carousel>
-          {data &&
-            data.map(({ web_img, logo_img, content, button_text }) => {
+          {carouselData &&
+            carouselData.map(({ web_img, logo_img, content, button_text }) => {
               return (
                 <>
                   <CarouselCard img={web_img} />
@@ -50,6 +62,9 @@ const Home = () => {
             })}
         </Carousel>
       </CarouselContainer>
+      <SectionContainer>
+        <Section title="요일별 신작" option={<WeekPicker />} contents="w" />
+      </SectionContainer>
     </Container>
   )
 }
@@ -59,6 +74,7 @@ export default Home
 const Container = styled.div`
   position: relative;
   display: flex;
+  flex-direction: column;
 `
 const CarouselContainer = styled.div`
   width: 100%;
@@ -67,6 +83,7 @@ const CarouselContainer = styled.div`
 const CarouselCard = styled.div<{ img: string }>`
   width: 100%;
   height: 642px;
+  cursor: pointer;
   background-size: cover;
   background-image: url(${(props) => props.img});
 `
@@ -111,4 +128,9 @@ const ButtonText = styled.span`
 const Arrow = styled(FiChevronRight)`
   width: 25px;
   height: 25px;
+`
+const SectionContainer = styled.div`
+  width: 100%;
+  background-color: #121212;
+  padding: 40px 0 146px 0;
 `
