@@ -11,7 +11,7 @@ import WeekPicker from "../components/WeekPicker"
 
 const Home = () => {
   const [scroll, setScroll] = useState<number>(0)
-  const [day, setDay] = useState<string>("월요일")
+  const [day, setDay] = useState<string>("")
 
   const { data: carouselData } = useQuery<CarouselType[]>(
     "carousel",
@@ -63,7 +63,11 @@ const Home = () => {
         </Carousel>
       </CarouselContainer>
       <SectionContainer>
-        <Section title="요일별 신작" option={<WeekPicker />} contents="w" />
+        <Section
+          title="요일별 신작"
+          option={<WeekPicker day="1" />}
+          contents="w"
+        />
       </SectionContainer>
     </Container>
   )

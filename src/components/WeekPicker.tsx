@@ -1,15 +1,32 @@
-import styled from "styled-components"
+import { useEffect, useState } from "react"
+import styled, { css } from "styled-components"
 
-const WeekPicker = () => {
+interface Props {
+  day: string
+}
+
+const WeekPicker: React.FC<Props> = ({ day }) => {
+  const dayList = ["월", "화", "수", "목", "금", "토", "일"]
+  const [selected, setSelected] = useState<string>("")
+
+  useEffect(() => {
+    const d = new Date()
+    const week = new Array("일", "월", "화", "수", "목", "금", "토")
+    setSelected(week[d.getDay()])
+  }, [])
+
   return (
     <Container>
-      <Button>월</Button>
-      <Button>화</Button>
-      <Button>수</Button>
-      <Button>목</Button>
-      <Button>금</Button>
-      <Button>토</Button>
-      <Button>일</Button>
+      {dayList.map((text) => {
+        return (
+          <Button
+            selected={text === selected}
+            onClick={() => setSelected(text)}
+          >
+            {text}
+          </Button>
+        )
+      })}
     </Container>
   )
 }
@@ -22,7 +39,7 @@ const Container = styled.div`
 
   margin: 12px 0 18px 0;
 `
-const Button = styled.button`
+const Button = styled.button<{ selected: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +48,6 @@ const Button = styled.button`
 
   border: none;
   border-radius: 50%;
-  background-color: #636363;
 
   color: #f7f7f7;
   font-size: 18.7px;
@@ -43,4 +59,16 @@ const Button = styled.button`
   & + & {
     margin-left: 23px;
   }
+
+  ${({ selected }) => {
+    if (selected) {
+      return css`
+        background-color: rgb(129, 107, 255);
+      `
+    } else {
+      return css`
+        background-color: #636363;
+      `
+    }
+  }}
 `
