@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { getDailyList, getMainList } from "../apis/home"
 import Header from "../components/Header"
 import Carousel from "../components/Carousel"

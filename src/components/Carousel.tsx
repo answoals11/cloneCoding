@@ -1,16 +1,17 @@
 import React from "react"
 import Slider, { Settings } from "react-slick"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
 interface Props {
+  type: "large" | "midium"
   settings?: Settings
   children: React.ReactNode
 }
 
-const Carousel: React.FC<Props> = ({ settings, children }) => {
+const Carousel: React.FC<Props> = ({ type, settings, children }) => {
   const defaultSettings: Settings = {
     dots: true,
     infinite: true,
@@ -36,7 +37,9 @@ const Carousel: React.FC<Props> = ({ settings, children }) => {
   }
   return (
     <React.Fragment>
-      <StyledSlider {...defaultSettings}>{children}</StyledSlider>
+      <StyledSlider type={type} {...defaultSettings}>
+        {children}
+      </StyledSlider>
     </React.Fragment>
   )
 }
@@ -64,10 +67,20 @@ const NextIcon = styled(FiChevronRight)`
   color: white;
 `
 
-const StyledSlider = styled(Slider)`
+const StyledSlider = styled(Slider)<{ type: "large" | "medium" }>`
+  ${({ type }) => {
+    if (type === "large") {
+      return css`
+        height: 155px;
+      `
+    } else {
+      return css`
+        height: 642px;
+      `
+    }
+  }}
   position: relative;
   width: 100%;
-  height: 642px;
 
   .slick-prev::before,
   .slick-next::before {
